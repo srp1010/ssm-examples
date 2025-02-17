@@ -19,8 +19,8 @@ Usage: (Linux/Bash etc)
   - If 0 instances, will prompt to deploy then wait until InstanceID known
   - If 1 instances, will show InstanceID and prompt to terminate
 - Once InstanceID shown, run either
-  -   ```./start_session instanceid```
-  -   ```./start_pf_session instanceid```
+  -   ```.\start_session instanceid```
+  -   ```.\start_pf_session instanceid```
 - First is session manager to instance to interact via command line, second opens port forward session where localhost:<localPortNumber> can be used to view website
 
 Usage: (Powershell)
