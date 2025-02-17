@@ -14,23 +14,23 @@ Assumption is
 
 Usage: (Linux/Bash etc)
 - Clone
-- chmod +x <eachfile>
-- First run ./manage_asg asg-name
+- ```chmod +x <eachfile>```
+- First run ```./manage_asg asg-name```
   - If 0 instances, will prompt to deploy then wait until InstanceID known
   - If 1 instances, will show InstanceID and prompt to terminate
 - Once InstanceID shown, run either
-  -   ./start_session instanceid
-  -   ./start_pf_session instanceid
+  -   ```./start_session instanceid```
+  -   ```./start_pf_session instanceid```
 - First is session manager to instance to interact via command line, second opens port forward session where localhost:<localPortNumber> can be used to view website
 
 Usage: (Powershell)
 - clone
-- Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-- First run .\manage_asg.ps1 asg_name
+- ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
+- First run ```.\manage_asg.ps1 asg_name```
   - If 0 instances, will prompt to deploy then wait until InstanceID known
   - If 1 instances, will show InstanceID and prompt to terminate
 - Once InstanceID shown, run either
-  -   .\start_session.ps1 instanceid
-  -   .\start_pf_session.ps1 instanceid
+  -   ```.\start_session.ps1 instanceid```
+  -   ```.\start_pf_session.ps1 instanceid```
 
 NB - not intended as a full/complete bullet proof solution - just some quick and dirty scripts to save time.
