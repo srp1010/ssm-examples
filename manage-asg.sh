@@ -1,7 +1,5 @@
 #!/bin/bash
 
-AWS_REGION="eu-west-2"  # Set to your desired region
-
 # Check if auto-scaling-group-name is provided as an argument
 if [ -z "$1" ]; then
   echo "Usage: $0 <auto-scaling-group-name>"
@@ -9,6 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 AUTO_SCALING_GROUP_NAME=$1
+AWS_REGION=${AWS_REGION:-eu-west-2} # Default region if not set
 
 # Check the current desired capacity
 DESIRED_CAPACITY=$(aws autoscaling describe-auto-scaling-groups \
@@ -24,7 +23,32 @@ if [ "$DESIRED_CAPACITY" == "0" ]; then
       --region $AWS_REGION \
       --auto-scaling-group-name "$AUTO_SCALING_GROUP_NAME" \
       --desired-capacity 1
-    echo "Desired capacity set to 1."
+    echo "Desired capacity set to 1. Waiting for instance to launch..."
+    
+    # Wait for instance ID to appear
+    TIMEOUT=60
+    INTERVAL=5
+    ELAPSED=0
+    INSTANCE_ID=""
+    while [ $ELAPSED -lt $TIMEOUT ]; do
+      INSTANCE_ID=$(aws autoscaling describe-auto-scaling-groups \
+        --region $AWS_REGION \
+        --auto-scaling-group-names "$AUTO_SCALING_GROUP_NAME" \
+        --query 'AutoScalingGroups[0].Instances[0].InstanceId' --output text 2>/dev/null)
+      
+      if [[ "$INSTANCE_ID" != "None" && -n "$INSTANCE_ID" ]]; then
+        echo "Instance started successfully. Instance ID: $INSTANCE_ID"
+        export INSTANCE_ID
+        break
+      fi
+      sleep $INTERVAL
+      ELAPSED=$((ELAPSED + INTERVAL))
+    done
+    
+    if [ -z "$INSTANCE_ID" ] || [ "$INSTANCE_ID" == "None" ]; then
+      echo "Timed out waiting for instance to start. Please check manually."
+      exit 1
+    fi
   else
     echo "No changes made."
   fi
