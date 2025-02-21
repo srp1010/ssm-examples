@@ -3,7 +3,7 @@ param (
 )
 
 if (-not $InstanceId) {
-    Write-Host "Usage: .\start-ssm-session.ps1 -InstanceId <INSTANCE_ID>"
+    Write-Host "Usage: .\start_session.ps1 -InstanceId <INSTANCE_ID>"
     exit 1
 }
 
