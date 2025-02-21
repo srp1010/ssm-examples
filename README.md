@@ -26,11 +26,11 @@ Usage: (Linux/Bash etc)
 Usage: (Powershell)
 - clone
 - ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
-- First run ```.\manage_asg.ps1 asg_name```
+- First run ```.\manage-autoscaling.ps1 -AutoScalingGroupName <Auto-Scaling-Group-Name>```
   - If 0 instances, will prompt to deploy then wait until InstanceID known
   - If 1 instances, will show InstanceID and prompt to terminate
 - Once InstanceID shown, run either
-  -   ```.\start_session.ps1 instanceid```
-  -   ```.\start_pf_session.ps1 instanceid```
+  -   ```.\start_session.ps1 -InstanceId <INSTANCE_ID>```
+  -   ```.\start_pf_session.ps1 -InstanceId <INSTANCE_ID>```
 
 NB - not intended as a full/complete bullet proof solution - just some quick and dirty scripts to save time.
