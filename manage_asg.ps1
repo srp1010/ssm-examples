@@ -7,7 +7,9 @@ if (-not $AutoScalingGroupName) {
     exit 1
 }
 
-$AWS_REGION = $env:AWS_REGION -or "eu-west-2"
+$AWS_REGION = if ($env:AWS_REGION -ne "") { $env:AWS_REGION } else { "eu-west-2" }
+$AWS_REGION = $AWS_REGION.Trim()
+Write-Host "Using AWS Region: '$AWS_REGION'"
 
 # Get the current desired capacity
 $DesiredCapacity = aws autoscaling describe-auto-scaling-groups `
